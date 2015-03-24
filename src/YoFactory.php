@@ -17,14 +17,14 @@ use NotifyMeHQ\NotifyMe\Arr;
 use NotifyMeHQ\NotifyMe\FactoryInterface;
 
 /**
- * This is the Yo factory class.
+ * This is the yo factory class.
  *
  * @author Vincent Klaiber <hello@vinkla.com>
  */
 class YoFactory implements FactoryInterface
 {
     /**
-     * Create a new slack gateway instance.
+     * Create a new yo gateway instance.
      *
      * @param string[] $config
      *

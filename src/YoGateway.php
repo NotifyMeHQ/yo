@@ -19,7 +19,7 @@ use NotifyMeHQ\NotifyMe\HttpGatewayTrait;
 use NotifyMeHQ\NotifyMe\Response;
 
 /**
- * This is the Yo gateway class.
+ * This is the yo gateway class.
  *
  * @author Vincent Klaiber <hello@vinkla.com>
  */
@@ -49,7 +49,7 @@ class YoGateway implements GatewayInterface
     protected $config;
 
     /**
-     * Create a new Yo gateway instance.
+     * Create a new yo gateway instance.
      *
      * @param \GuzzleHttp\Client $client
      * @param string[]           $config
@@ -138,12 +138,9 @@ class YoGateway implements GatewayInterface
      */
     protected function jsonError($rawResponse)
     {
-        $msg = 'API Response not valid.';
-        $msg .= " (Raw response API {$rawResponse->getBody()})";
+        $message = "API Response not valid. (Raw response API {$rawResponse->getBody()})";
 
-        return [
-            'error' => $msg,
-        ];
+        return ['error' => $message];
     }
 
     /**
