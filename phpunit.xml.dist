@@ -15,7 +15,7 @@
          verbose="true"
 >
     <testsuites>
-        <testsuite name="NotifyMe Slack Test Suite">
+        <testsuite name="NotifyMe Yo Test Suite">
             <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
