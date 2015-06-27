@@ -13,7 +13,7 @@ namespace NotifyMeHQ\Yo;
 
 use GuzzleHttp\Client;
 use NotifyMeHQ\NotifyMe\Arr;
-use NotifyMeHQ\NotifyMe\FactoryInterface;
+use NotifyMeHQ\Contracts\FactoryInterface;
 
 /**
  * This is the yo factory class.
