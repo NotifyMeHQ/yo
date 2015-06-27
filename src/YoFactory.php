@@ -3,7 +3,7 @@
 /*
  * This file is part of NotifyMe.
  *
- * (c) Cachet HQ <support@cachethq.io>
+ * (c) Alt Three LTD <support@alt-three.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,8 +12,8 @@
 namespace NotifyMeHQ\Yo;
 
 use GuzzleHttp\Client;
-use NotifyMeHQ\NotifyMe\Arr;
 use NotifyMeHQ\Contracts\FactoryInterface;
+use NotifyMeHQ\NotifyMe\Arr;
 
 /**
  * This is the yo factory class.

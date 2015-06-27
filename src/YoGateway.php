@@ -3,7 +3,7 @@
 /*
  * This file is part of NotifyMe.
  *
- * (c) Cachet HQ <support@cachethq.io>
+ * (c) Alt Three LTD <support@alt-three.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,7 +13,7 @@ namespace NotifyMeHQ\Yo;
 
 use GuzzleHttp\Client;
 use NotifyMeHQ\NotifyMe\Arr;
-use NotifyMeHQ\NotifyMe\GatewayInterface;
+use NotifyMeHQ\Contracts\GatewayInterface;
 use NotifyMeHQ\NotifyMe\HttpGatewayTrait;
 use NotifyMeHQ\NotifyMe\Response;
 
@@ -68,7 +68,7 @@ class YoGateway implements GatewayInterface
      * @param string   $message
      * @param string[] $options
      *
-     * @return \NotifyMeHQ\NotifyMe\Response
+     * @return \NotifyMeHQ\Contracts\ResponseInterface
      */
     public function notify($to, $message = 'yo', array $options = [])
     {
@@ -118,7 +118,7 @@ class YoGateway implements GatewayInterface
      * @param bool  $success
      * @param array $response
      *
-     * @return \NotifyMeHQ\NotifyMe\Response
+     * @return \NotifyMeHQ\Contracts\ResponseInterface
      */
     protected function mapResponse($success, $response)
     {
