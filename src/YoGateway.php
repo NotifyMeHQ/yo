@@ -12,40 +12,21 @@
 namespace NotifyMeHQ\Yo;
 
 use GuzzleHttp\Client;
-use NotifyMeHQ\NotifyMe\Arr;
 use NotifyMeHQ\Contracts\GatewayInterface;
+use NotifyMeHQ\NotifyMe\Arr;
 use NotifyMeHQ\NotifyMe\HttpGatewayTrait;
 use NotifyMeHQ\NotifyMe\Response;
 
-/**
- * This is the yo gateway class.
- *
- * @author Vincent Klaiber <hello@vinkla.com>
- */
 class YoGateway implements GatewayInterface
 {
     use HttpGatewayTrait;
 
     /**
-     * Gateway api endpoint.
+     * The api endpoint.
      *
      * @var string
      */
     protected $endpoint = 'http://api.justyo.co';
-
-    /**
-     * The http client.
-     *
-     * @var \GuzzleHttp\Client
-     */
-    protected $client;
-
-    /**
-     * Configuration options.
-     *
-     * @var string[]
-     */
-    protected $config;
 
     /**
      * Create a new yo gateway instance.
@@ -64,46 +45,47 @@ class YoGateway implements GatewayInterface
     /**
      * Send a notification.
      *
-     * @param string   $to
-     * @param string   $message
-     * @param string[] $options
+     * @param string $to
+     * @param string $message
      *
      * @return \NotifyMeHQ\Contracts\ResponseInterface
      */
-    public function notify($to, $message = 'yo', array $options = [])
+    public function notify($to, $message)
     {
-        $params['username'] = strtoupper($to);
+        $params = [
+            'username'  => strtoupper($to),
+            'api_token' => $this->config['token'],
+            'location'  => Arr::get($this->config, 'location'),
+            'link'      => Arr::get($this->config, 'link'),
+        ];
 
-        $params['api_token'] = Arr::get($options, 'token', $this->config['token']);
-        $params['location'] = Arr::get($options, 'location');
-        $params['link'] = Arr::get($options, 'link');
-
-        return $this->commit('post', $this->buildUrlFromString('yo'), $params);
+        return $this->send($this->buildUrlFromString('yo'), $params);
     }
 
     /**
-     * Commit a HTTP request.
+     * Send the notification over the wire.
      *
-     * @param string   $method
      * @param string   $url
      * @param string[] $params
-     * @param string[] $options
      *
-     * @return mixed
+     * @return \NotifyMeHQ\Contracts\ResponseInterface
      */
-    protected function commit($method = 'post', $url, array $params = [], array $options = [])
+    protected function send($url, array $params)
     {
         $success = false;
 
-        $rawResponse = $this->client->{$method}($url, [
+        $rawResponse = $this->client->post($url, [
             'exceptions'      => false,
             'timeout'         => '80',
             'connect_timeout' => '30',
-            'body'            => $params,
+            'headers'         => [
+                'Accept' => 'application/json',
+            ],
+            'body' => $params,
         ]);
 
-        if ($rawResponse->getStatusCode() == 200) {
-            $response = $this->parseResponse($rawResponse->getBody());
+        (substr((string) $rawResponse->getStatusCode(), 0, 1) === '2')
+            $response = $rawResponse->json();
             $success = $response['success'];
         } else {
             $response = $this->responseError($rawResponse);
@@ -113,7 +95,7 @@ class YoGateway implements GatewayInterface
     }
 
     /**
-     * Map HTTP response to response object.
+     * Map the raw response to our response object.
      *
      * @param bool  $success
      * @param array $response
@@ -131,7 +113,7 @@ class YoGateway implements GatewayInterface
     /**
      * Get the default json response.
      *
-     * @param string $rawResponse
+     * @param \GuzzleHttp\Message\ResponseInterface $rawResponse
      *
      * @return array
      */

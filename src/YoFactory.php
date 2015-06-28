@@ -15,11 +15,6 @@ use GuzzleHttp\Client;
 use NotifyMeHQ\Contracts\FactoryInterface;
 use NotifyMeHQ\NotifyMe\Arr;
 
-/**
- * This is the yo factory class.
- *
- * @author Vincent Klaiber <hello@vinkla.com>
- */
 class YoFactory implements FactoryInterface
 {
     /**
